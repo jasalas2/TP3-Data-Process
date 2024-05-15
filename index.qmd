@@ -1,0 +1,122 @@
+---
+title: "Registros de pacientes que sufrieron insuficiencia cardiaca"
+author: "Jarod Salas"
+format: html
+editor: visual
+toc: true
+lang: es
+theme: lumen
+---
+
+# Introducción
+
+En la actualidad, aproximadamente 17 millones de personas a nivel global mueren cada año por enfermedades cardiovasculares. A través del análisis de los datos de los pacientes, se puede comprender de mejor manera la influencia de factores de riesgo en las personas y realizar modelos predictivos que permitan una posible reducción de la mortalidad en un futuro. Este proyecto se encargará de analizar los diversos factores de riesgo como la edad, sexo, presencia de diabletes, anemia, si es fumador o no, entre otros, para entender la indicencia de enfermedades cardiacas en las personas.
+
+# Carga de paquetes
+
+```{r}
+#| label: carga-paquetes
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(knitr)
+```
+
+# Carga de datos
+
+```{r}
+#| label: carga-datos
+#| message: false
+#| warning: false
+
+pacientes_heart <- read_csv("heart_failure_clinical_records_dataset.csv")
+```
+
+# Consultas
+
+## Consulta 1
+
+Tabla que para las mujeres mayores de 75 años muestre, en orden descendente de edad, las columnas correspondientes a:
+
+-   Sexo
+-   Edad
+-   Diabetes
+-   Presión arterial alta
+-   Creatinina sérica
+
+```{r}
+#| label: consulta1
+
+# select (sex, age, diabetes, high_blood_pressure, serum_creatinine)
+
+pacientes_heart |>
+  select(sex, age, diabetes, high_blood_pressure, serum_creatinine) |>
+  filter(age >75 & sex == 0) |>
+  arrange(desc(age)) |>
+  kable()
+  
+```
+
+## Consulta 2
+
+Tabla que para todos los hombres diabéticos o fumadores muestre, en orden ascendente de edad, las columnas correspondientes a:
+
+-   Sexo
+-   Edad
+-   Diabetes
+-   Fumador
+-   Fracción de eyección
+
+```{r}
+#| label: consulta2
+
+# select(sex, age, diabetes, smoking, ejection_fraction)
+
+pacientes_heart |>
+  select(sex, age, diabetes, smoking, ejection_fraction) |>
+  filter(diabetes == 1 & smoking == 1 & sex == 1) |>
+  arrange(age) |>
+  kable()
+```
+
+## Consulta 3
+
+Tabla que muestre el promedio de fracción de eyección de los pacientes diabéticos y de los pacientes no diabéticos.
+
+```{r}
+#| label: consulta3
+
+pacientes_heart |>
+  group_by(diabetes) |>
+  summarise(ejection_fraction_mean = mean(ejection_fraction)) |>
+  kable()
+```
+
+## Consulta 4
+
+Tabla que muestre la menor edad de los hombres fallecidos
+
+```{r}
+#| label: consulta4
+
+pacientes_heart |>
+  filter(sex == 1 & DEATH_EVENT == 1 | age == 1) |>
+  group_by(sex) |>
+  summarise(age_min = min(age)) |>
+  kable()
+```
+
+```{r}
+#| label: consulta5
+
+pacientes_heart |>
+  mutate(DEATH_SEX = paste0(DEATH_EVENT, "-", sex)) |>
+  filter(DEATH_SEX == "1-1") |>
+  summarise(age_min = min(age)) |>
+  kable()
+
+```
+
+
+
