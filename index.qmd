@@ -101,22 +101,13 @@ Tabla que muestre la menor edad de los hombres fallecidos
 #| label: consulta4
 
 pacientes_heart |>
-  filter(sex == 1 & DEATH_EVENT == 1 | age == 1) |>
-  group_by(sex) |>
-  summarise(age_min = min(age)) |>
+  filter(sex == 1 & DEATH_EVENT == 1) |>
+  group_by(sex, DEATH_EVENT) |>
+  summarise(age_min = min(age), .groups = 'drop') |>
   kable()
 ```
 
-```{r}
-#| label: consulta5
 
-pacientes_heart |>
-  mutate(DEATH_SEX = paste0(DEATH_EVENT, "-", sex)) |>
-  filter(DEATH_SEX == "1-1") |>
-  summarise(age_min = min(age)) |>
-  kable()
-
-```
 
 
 
