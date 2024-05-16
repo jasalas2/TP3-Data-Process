@@ -1,6 +1,7 @@
 ---
-title: "Registros de pacientes que sufrieron insuficiencia cardiaca"
+title: "Registros de pacientes que presentan factores de riesgo asociados a la insuficiencia cardiaca"
 author: "Jarod Salas"
+date: "2024-05-16"
 format: html
 editor: visual
 toc: true
@@ -11,6 +12,10 @@ theme: lumen
 # Introducción
 
 En la actualidad, aproximadamente 17 millones de personas a nivel global mueren cada año por enfermedades cardiovasculares. A través del análisis de los datos de los pacientes, se puede comprender de mejor manera la influencia de factores de riesgo en las personas y realizar modelos predictivos que permitan una posible reducción de la mortalidad en un futuro. Este proyecto se encargará de analizar los diversos factores de riesgo como la edad, sexo, presencia de diabletes, anemia, si es fumador o no, entre otros, para entender la indicencia de enfermedades cardiacas en las personas.
+
+Los datos fueron obtenidos del artículo de Chicco y Jurman (2020). [Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-020-1023-5)
+
+
 
 # Carga de paquetes
 
